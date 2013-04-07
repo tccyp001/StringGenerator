@@ -27,5 +27,23 @@ namespace StringGenerator
                OutputDataGridView.DataSource = dt;   
             }
         }
+
+        private void btnTest_Click(object sender, EventArgs e)
+        {
+            StringFormatOnFly strOnFly = new StringFormatOnFly();
+            var myExpr = RTBExpr.Text;
+            var ret = strOnFly.ExecuteOnFlyCode(myExpr, RTBInput.Text);
+            RTBOutput.Text = ret.ToString();
+        }
+
+        private void tabPage1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void RTBInput_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

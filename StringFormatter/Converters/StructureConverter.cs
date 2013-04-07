@@ -38,7 +38,12 @@ namespace StringFormatter.Converters
             return dt;
 
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="str"></param>
+        /// <param name="tfs"></param>
+        /// <returns></returns>
         public static List<List<string>> ConvertStrToStrLists(string str, TableFormatterSetting tfs)
         {
             List<List<string>> stringTable = new List<List<string>>();
