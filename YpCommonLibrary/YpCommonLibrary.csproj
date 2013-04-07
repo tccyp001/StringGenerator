@@ -5,14 +5,13 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{3C556F3C-47FE-4C23-8B43-12338F882F4A}</ProjectGuid>
+    <ProjectGuid>{C826BD71-4403-4527-9F7F-3369D34BBDEF}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>StringFormatter</RootNamespace>
-    <AssemblyName>StringFormatter</AssemblyName>
+    <RootNamespace>YpCommonLibrary</RootNamespace>
+    <AssemblyName>YpCommonLibrary</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -33,29 +32,17 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
-    <Reference Include="System.XML" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Converters\StructureConverter.cs" />
-    <Compile Include="Converters\TableFormatterSetting.cs" />
-    <Compile Include="StringFormatOnFly.cs" />
-    <Compile Include="Utils\StringExtension.cs" />
-    <Compile Include="YpStringFormatter.cs" />
+    <Compile Include="Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Service References\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="StringFormatOnFlyTemplate.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\YpCommonLibrary\YpCommonLibrary.csproj">
-      <Project>{C826BD71-4403-4527-9F7F-3369D34BBDEF}</Project>
-      <Name>YpCommonLibrary</Name>
-    </ProjectReference>
+    <Compile Include="Utils\StringExtension.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

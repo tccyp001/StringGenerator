@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using YpCommonLibrary.Utils;
 namespace RandomGenerator
 {
     public static class RandomSettingParser
@@ -125,10 +125,7 @@ namespace RandomGenerator
             return itemStrs;
         }
 
-        private static bool ContainsInsensitiveCase(this string str, string str1)
-        {
-            return str.ToLower().Contains(str1.ToLower());
-        }
+        
         private static void SetRandType(string configStr, RandomSettings randSettings)
         {
             if (configStr.Trim().StartsWith("\\d"))

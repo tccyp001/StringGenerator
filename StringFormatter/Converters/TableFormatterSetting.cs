@@ -1,5 +1,4 @@
-﻿
-namespace StringFormatter.Converters
+﻿namespace StringFormatter.Converters
 {
     public class TableFormatterSetting
     {
@@ -11,6 +10,7 @@ namespace StringFormatter.Converters
         public string cellRightWrapper;
         public string rowLeftWrapper;
         public string rowRightWrapper;
+        public string customRowFormat;
 
         public static TableFormatterSetting GetDefaultSetting()
         {
@@ -27,6 +27,7 @@ namespace StringFormatter.Converters
             cellRightWrapper = "\"";
             rowLeftWrapper = "\tnew object[]{";
             rowRightWrapper = "}";
+            customRowFormat = string.Empty;
         }
     }
 }

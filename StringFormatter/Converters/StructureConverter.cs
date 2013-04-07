@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
-
+using YpCommonLibrary.Utils;
 namespace StringFormatter.Converters
 {
     public static class StructureConverter
     {
-
         public static DataTable ConvertStrToDataTable(string str, TableFormatterSetting tfs)
         {
             return ConvertStrListToDT(ConvertStrToStrLists(str, tfs));
@@ -62,6 +61,65 @@ namespace StringFormatter.Converters
                 stringTable.Add(strRow);
             }
             return stringTable;
+        }
+
+        public static string ConvertDTToStr(DataTable dt, TableFormatterSetting tfs)
+        {
+            StringBuilder sb = new StringBuilder();
+            bool isFirstRow = true;
+            foreach (DataRow row in dt.Rows)
+            {
+                if (!isFirstRow)
+                {
+                    sb.Append(tfs.newRowDelimiter);
+                }
+                sb.Append(tfs.rowLeftWrapper);
+                GetRowStr(row, tfs, sb);
+                sb.Append(tfs.rowRightWrapper); 
+                isFirstRow = false;
+            }
+            return sb.ToString();
+        }
+
+        private static void GetRowStr(DataRow row, TableFormatterSetting tfs, StringBuilder sb)
+        {
+            if (string.IsNullOrWhiteSpace(tfs.customRowFormat))
+            {
+                GetRegularRowStr(row, tfs, sb);
+            }
+            else
+            {
+                GetCustomRowStr(row, tfs, sb);
+            }
+        }
+
+        private static void GetCustomRowStr(DataRow row, TableFormatterSetting tfs, StringBuilder sb)
+        {
+            var templateStr = tfs.customRowFormat;
+            for (int i = 0; i < row.ItemArray.Count(); i++)
+            {
+                var colKey = "{col" + i + "}";
+                if (templateStr.ContainsInsensitiveCase(colKey))
+	            {
+                    templateStr.Replace(colKey, row.ItemArray[i]);
+	            }
+            }
+            sb.Append(templateStr);
+        }
+        public static void GetRegularRowStr(DataRow dr, TableFormatterSetting tfs, StringBuilder sb)
+        {
+            bool isFirstCell = true;
+            foreach (var cell in dr.ItemArray)
+            {
+                if (!isFirstCell)
+                {
+                    sb.Append(tfs.newCellDelimiter);
+                }
+                isFirstCell = false;
+                sb.Append(tfs.cellLeftWrapper);
+                sb.Append(cell.ToString());
+                sb.Append(tfs.cellRightWrapper);
+            }
         }
     }
 }

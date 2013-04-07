@@ -40,7 +40,7 @@ namespace RandomGenerator
             if (randomSettings.RandType == RandomType.DecimalNumber)
             {
                 var tempRand = r.Next()%(randomSettings.RangeTo - randomSettings.RangeFrom) + randomSettings.RangeFrom;
-                int digits = (int) Math.Pow(10, randomSettings.DigitsNumber);
+                int digits = (int) Math.Pow(10, randomSettings.DigitLen);
                 decimal tempRandDecimal = r.Next()%digits;
                 tempRandDecimal = tempRandDecimal/digits + tempRand;
                 return tempRandDecimal.ToString();

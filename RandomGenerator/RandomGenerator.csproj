@@ -47,6 +47,12 @@
     <Compile Include="RandomTextGeneratorFactory.cs" />
     <Compile Include="RandomType.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\YpCommonLibrary\YpCommonLibrary.csproj">
+      <Project>{C826BD71-4403-4527-9F7F-3369D34BBDEF}</Project>
+      <Name>YpCommonLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

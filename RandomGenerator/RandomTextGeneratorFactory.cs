@@ -9,7 +9,7 @@ namespace RandomGenerator
     {
         public RandomTextGenerator GetRandomTextGenerator(RandomSettings randSettings)
         {
-            
+            return new RandomTextGenerator(randSettings);
         }
     }
 }
