@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
-using YpCommonLibrary.Utils;
 namespace StringFormatter.Converters
 {
     public static class StructureConverter
@@ -99,10 +98,18 @@ namespace StringFormatter.Converters
             for (int i = 0; i < row.ItemArray.Count(); i++)
             {
                 var colKey = "{col" + i + "}";
-                if (templateStr.ContainsInsensitiveCase(colKey))
+                var keyIndex = templateStr.IndexOf(colKey, StringComparison.InvariantCultureIgnoreCase);
+                var realKey = templateStr.Substring(keyIndex, colKey.Length);
+                if (keyIndex > -1)
 	            {
-                    templateStr.Replace(colKey, row.ItemArray[i]);
+                    templateStr = templateStr.Replace(realKey, row.ItemArray[i].ToString());
 	            }
+            }
+            var regKey = "{regularrow}";
+            var regIndex = templateStr.IndexOf(regKey, StringComparison.InvariantCultureIgnoreCase);
+            if (regIndex > -1)
+            {
+                templateStr = templateStr.Replace(templateStr.Substring(regIndex, regKey.Length), GetRegularRowStr(row, tfs));
             }
             sb.Append(templateStr);
         }
@@ -120,6 +127,23 @@ namespace StringFormatter.Converters
                 sb.Append(cell.ToString());
                 sb.Append(tfs.cellRightWrapper);
             }
+        }
+        public static string GetRegularRowStr(DataRow dr, TableFormatterSetting tfs)
+        {
+            StringBuilder sb = new StringBuilder();
+            bool isFirstCell = true;
+            foreach (var cell in dr.ItemArray)
+            {
+                if (!isFirstCell)
+                {
+                    sb.Append(tfs.newCellDelimiter);
+                }
+                isFirstCell = false;
+                sb.Append(tfs.cellLeftWrapper);
+                sb.Append(cell.ToString());
+                sb.Append(tfs.cellRightWrapper);
+            }
+            return sb.ToString();
         }
     }
 }

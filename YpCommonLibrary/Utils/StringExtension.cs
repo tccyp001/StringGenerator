@@ -7,7 +7,7 @@ namespace YpCommonLibrary.Utils
 {
     public static class StringExtension
     {
-        private static bool ContainsInsensitiveCase(this string str, string str1)
+        public static bool ContainsInsensitiveCase(this string str, string str1)
         {
             return str.ToLower().Contains(str1.ToLower());
         }
