@@ -26,11 +26,9 @@ namespace StringFormatter.Converters
             foreach (var strLine in stringTable)
             {
                 var dataRow = dt.NewRow();
-
 // ReSharper disable CoVariantArrayConversion
                 dataRow.ItemArray = strLine.ToArray();
 // ReSharper restore CoVariantArrayConversion
-
                 dt.Rows.Add(dataRow);
             }
             return dt;
@@ -46,22 +44,64 @@ namespace StringFormatter.Converters
         {
             List<List<string>> stringTable = new List<List<string>>();
             var strLines = str.Split(tfs.oldRowDelimiter.ToCharArray());
+            int totalColCount = GetTotalColCount(strLines[0], tfs);
             foreach (var strLine in strLines)
             {
                 var strRow = new List<string>();
                 if (!string.IsNullOrWhiteSpace(strLine))
                 {
                     var strCells = strLine.Split(tfs.oldCellDelimiter.ToCharArray());
+                    if (strCells.Count() != totalColCount)
+                    {
+                        strCells = GetUnStandardRow(strCells, totalColCount, tfs); 
+                    }
                     foreach (var strCell in strCells)
                     {
                         strRow.Add(strCell);
                     }
+ 
+                    
                 }
                 stringTable.Add(strRow);
             }
             return stringTable;
         }
 
+        private static string[] GetUnStandardRow(string[] strCells, int totalColCount, TableFormatterSetting tfs)
+        {
+            // like this ----- abc
+            string[] retStrs = new string[totalColCount];
+            int index =0;
+            if (strCells.Count()< totalColCount)
+            {
+                foreach (var str in strCells)
+                {
+                    char emptyCellMark = tfs.emptyCellMark.ToCharArray()[0];
+                    int emptyCellMarkCount = str.Count(f => f == emptyCellMark);
+                    for (int i = 0; i < emptyCellMarkCount; i++)
+                    {
+                        retStrs[index] =string.Empty;
+                        index++;
+                    }
+                    var strTemp = str.Replace(tfs.emptyCellMark, "");
+                    if (!string.IsNullOrWhiteSpace(strTemp))
+                    {
+                        retStrs[index] = strTemp;
+                        index++;
+                    }
+                }
+            }
+            return retStrs;
+        }
+
+        private static int GetTotalColCount(string str, TableFormatterSetting tfs)
+        {
+            if (tfs.totalColNum <=0)
+            {
+               tfs.totalColNum =  str.Split(tfs.oldCellDelimiter.ToCharArray()).Count();
+            }
+            return tfs.totalColNum;
+        }
         public static string ConvertDTToStr(DataTable dt, TableFormatterSetting tfs)
         {
             StringBuilder sb = new StringBuilder();
@@ -102,7 +142,7 @@ namespace StringFormatter.Converters
                 var realKey = templateStr.Substring(keyIndex, colKey.Length);
                 if (keyIndex > -1)
 	            {
-                    templateStr = templateStr.Replace(realKey, row.ItemArray[i].ToString());
+                    templateStr = templateStr.Replace(realKey, GetRegularCellStr(row.ItemArray[i].ToString(), i, tfs));
 	            }
             }
             var regKey = "{regularrow}";
@@ -116,6 +156,7 @@ namespace StringFormatter.Converters
         public static void GetRegularRowStr(DataRow dr, TableFormatterSetting tfs, StringBuilder sb)
         {
             bool isFirstCell = true;
+            int colIndex = 0;
             foreach (var cell in dr.ItemArray)
             {
                 if (!isFirstCell)
@@ -124,10 +165,147 @@ namespace StringFormatter.Converters
                 }
                 isFirstCell = false;
                 sb.Append(tfs.cellLeftWrapper);
-                sb.Append(cell.ToString());
+                sb.Append(GetRegularCellStr(cell.ToString(),colIndex,tfs));
                 sb.Append(tfs.cellRightWrapper);
+                colIndex++;
             }
         }
+
+        public static string GetRegularCellStr(string input, int colIndex, TableFormatterSetting tfs)
+        {
+            if (tfs.ColFormatOperationDic.ContainsKey(colIndex))
+            {
+                return ApplyCellCustomOp(input, tfs.ColFormatOperationDic[colIndex]);
+            }
+            return input;
+        }
+        /// <summary>
+        /// operation should be as following format 
+        /// Insert(1,"bbb") RevInsert(0,"ccc")
+        /// Delete(1,2) RevDelete(2,2)
+        /// Update(1,"aaa") RevUpdate(2,"aaa")
+        /// Get(1,2) RevGet(1,2)
+        /// Reverse() Reverse()
+        /// </summary>
+        /// <param name="input"></param>
+        /// <param name="operation"></param>
+        /// <returns></returns>
+        public static string ApplyCellCustomOp(string input, string operation)
+        {
+            bool reverseFlag = false;
+            string retStr = input;
+            int index1, index2;
+            if (operation.IndexOf("rev", StringComparison.InvariantCultureIgnoreCase)>0 || 
+                   operation.IndexOf("reverse", StringComparison.InvariantCultureIgnoreCase)>0)
+            {
+                reverseFlag = true;
+            }
+            index1 = operation.IndexOf("ins", StringComparison.InvariantCultureIgnoreCase);
+            index2 = operation.IndexOf("insert", StringComparison.InvariantCultureIgnoreCase);
+            if (index1 >0 || index2>0)
+            {
+                string value1;
+                string value2;
+                GetOperationValues(operation, out value1, out value2);
+                
+                int index = int.Parse(value1);
+                value2 = RemoveQuote(value2);
+                if (reverseFlag)
+                {
+                    index = input.Length - index -1;
+                }
+                if (index >= 0 && index < input.Length)
+                {
+                    retStr = input.Insert(index, value2);
+                }
+            }
+            index1 = operation.IndexOf("del", StringComparison.InvariantCultureIgnoreCase);
+            index2 = operation.IndexOf("delete", StringComparison.InvariantCultureIgnoreCase);
+            if (index1 >0 || index2>0)
+            {
+                string value1;
+                string value2;
+                GetOperationValues(operation, out value1, out value2);
+
+                int index = int.Parse(value1);
+                int len = int.Parse(value2);
+                if (reverseFlag)
+                {
+                    index = input.Length - index -1;
+                }
+                if (index >= 0 && index + len < input.Length)
+                {
+                    retStr = input.Remove(index, len);
+                }
+            }
+            index1 = operation.IndexOf("upd", StringComparison.InvariantCultureIgnoreCase);
+            index2 = operation.IndexOf("update", StringComparison.InvariantCultureIgnoreCase);
+            if (index1 >0)
+            {
+                string value1;
+                string value2;
+                GetOperationValues(operation, out value1, out value2);
+
+                int index = int.Parse(value1);
+                value2 = RemoveQuote(value2);
+                
+                if (reverseFlag)
+                {
+                    index = input.Length - index -1;
+                }
+                if (index >= 0 && index + value2.Length < input.Length)
+                {
+                    retStr = input.Remove(index, value2.Length);
+                    retStr = retStr.Insert(index, value2);
+                }
+            }
+            index1 = operation.IndexOf("get", StringComparison.InvariantCultureIgnoreCase);
+            if (index1 >0 || index2>0)
+            {
+                string value1;
+                string value2;
+                GetOperationValues(operation, out value1, out value2);
+
+                int index = int.Parse(value1);
+                int len = int.Parse(value2);
+                if (reverseFlag)
+                {
+                    index = input.Length - index -1;
+                }
+                if (index >= 0 && index + len < input.Length)
+                {
+                    retStr = input.Substring(index, len);
+                }
+            }
+
+            return retStr;
+        }
+        private static string RemoveQuote(string input)
+        { 
+            if (string.IsNullOrWhiteSpace(input))
+                return input;
+      
+            if (input[0] == '"' && input[input.Length -1] == '"' ||
+                input[0] == '\'' && input[input.Length -1] == '\'')
+            {
+                return input.Substring(1, input.Length -2);
+            }
+            return input;
+
+        }
+
+        private static void GetOperationValues(string input, out string value1, out string value2)
+        {
+            int lbindex;
+            int firstCommaIndex;
+            int rbindex;
+            lbindex = input.IndexOf("(");
+            firstCommaIndex = input.IndexOf(",");
+            rbindex = input.IndexOf(")");
+            value1 = input.Substring(lbindex + 1, firstCommaIndex - lbindex - 1);
+            value2 = input.Substring(firstCommaIndex + 1, rbindex - firstCommaIndex - 1);
+        }
+
         public static string GetRegularRowStr(DataRow dr, TableFormatterSetting tfs)
         {
             StringBuilder sb = new StringBuilder();

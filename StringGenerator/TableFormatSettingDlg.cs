@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using StringFormatter.Converters;
 
@@ -22,31 +18,63 @@ namespace StringGenerator
         private void button1_Click(object sender, EventArgs e)
         {
             UpdateSettingsModel();
+            DialogResult = DialogResult.OK;
         }
 
         private void UpdateSettingsModel()
         {
-            tfs.oldRowDelimiter = txtOldRowDelimiter.Text;
-            tfs.oldCellDelimiter = txtOldColDelimiter.Text;
-            tfs.newRowDelimiter = txtNewRowDelimiter.Text;
-            tfs.newCellDelimiter = txtNewColDelimiter.Text;
+            tfs.OldRowDelimiterDisplay = txtOldRowDelimiter.Text;
+            tfs.OldCellDelimiterDisplay = txtOldColDelimiter.Text;
+            tfs.NewRowDelimiterDisplay = txtNewRowDelimiter.Text;
+            tfs.NewCellDelimiterDisplay = txtNewColDelimiter.Text;
             tfs.rowLeftWrapper = txtNewRowLeftWrapper.Text;
             tfs.rowRightWrapper = txtNewRowRightWrapper.Text;
             tfs.cellLeftWrapper = txtNewColLeftWrapper.Text;
             tfs.cellRightWrapper = txtNewColRightWrapper.Text;
             tfs.customRowFormat = txtCustomTemplate.Text;
+            tfs.emptyCellMark =  txtEmptyCellMark.Text;
+            SetColSettings();
+
+        }
+        private void SetColSettings()
+        {
+            DataTable dt = new DataTable();
+            dt.Columns.Add(new DataColumn("Column Index"));
+            dt.Columns.Add(new DataColumn("Column Operation"));
+            foreach (var key in tfs.ColFormatOperationDic.Keys)
+            {
+                var dr = dt.NewRow();
+                dr[0] = key;
+                dr[1] = tfs.ColFormatOperationDic[key];
+                dt.Rows.Add(dr);
+            }
+            dataGVColSetting.DataSource = dt;
         }
         private void UpdateSettingsView()
         {
-            txtOldRowDelimiter.Text = tfs.oldRowDelimiter;
-            txtOldColDelimiter.Text = tfs.oldCellDelimiter;
-            txtNewRowDelimiter.Text = tfs.newRowDelimiter; 
-            txtNewColDelimiter.Text = tfs.newCellDelimiter;
+            txtOldRowDelimiter.Text = tfs.OldRowDelimiterDisplay;
+            txtOldColDelimiter.Text = tfs.OldCellDelimiterDisplay;
+            txtNewRowDelimiter.Text = tfs.NewRowDelimiterDisplay;
+            txtNewColDelimiter.Text = tfs.NewCellDelimiterDisplay;
             txtNewRowLeftWrapper.Text = tfs.rowLeftWrapper;  
             txtNewRowRightWrapper.Text = tfs.rowRightWrapper;
             txtNewColLeftWrapper.Text = tfs.cellLeftWrapper;
             txtNewColRightWrapper.Text = tfs.cellRightWrapper;
             txtCustomTemplate.Text = tfs.customRowFormat;
+            txtEmptyCellMark.Text = tfs.emptyCellMark;
+        }
+
+        private void btnDel_Click(object sender, EventArgs e)
+        {
+            //dataGVColSetting.SelectedRows.
+        }
+
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            int index = int.Parse(txtColIndex.Text);
+            string op = txtColFormat.Text;
+            tfs.ColFormatOperationDic.Add(index, op);
+            SetColSettings();
         }
     }
 }

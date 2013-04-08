@@ -37,6 +37,8 @@
             this.RTBInput = new System.Windows.Forms.RichTextBox();
             this.OutputDataGridView = new System.Windows.Forms.DataGridView();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.btnFormatSetting = new System.Windows.Forms.Button();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.OutputDataGridView)).BeginInit();
@@ -54,7 +56,7 @@
             // 
             // btnTest
             // 
-            this.btnTest.Location = new System.Drawing.Point(52, 627);
+            this.btnTest.Location = new System.Drawing.Point(227, 627);
             this.btnTest.Name = "btnTest";
             this.btnTest.Size = new System.Drawing.Size(75, 23);
             this.btnTest.TabIndex = 3;
@@ -130,20 +132,42 @@
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // btnFormatSetting
+            // 
+            this.btnFormatSetting.Location = new System.Drawing.Point(34, 626);
+            this.btnFormatSetting.Name = "btnFormatSetting";
+            this.btnFormatSetting.Size = new System.Drawing.Size(86, 23);
+            this.btnFormatSetting.TabIndex = 7;
+            this.btnFormatSetting.Text = "FormatSetting";
+            this.btnFormatSetting.UseVisualStyleBackColor = true;
+            this.btnFormatSetting.Click += new System.EventHandler(this.btnFormatSetting_Click);
+            // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(1443, 24);
+            this.menuStrip1.TabIndex = 8;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1443, 686);
+            this.Controls.Add(this.btnFormatSetting);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.btnTest);
             this.Controls.Add(this.BtnStart);
+            this.Controls.Add(this.menuStrip1);
+            this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
             this.Text = "Form1";
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.OutputDataGridView)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -158,6 +182,8 @@
         private System.Windows.Forms.RichTextBox RTBExpr;
         private System.Windows.Forms.RichTextBox RTBInput;
         private System.Windows.Forms.DataGridView OutputDataGridView;
+        private System.Windows.Forms.Button btnFormatSetting;
+        private System.Windows.Forms.MenuStrip menuStrip1;
     }
 }
 

@@ -17,14 +17,23 @@ namespace StringGenerator
         {
             InitializeComponent();
         }
-
+        private TableFormatterSetting tfs;
+        protected TableFormatterSetting GetSetting()
+        {
+            if (tfs == null)
+            {
+                tfs = TableFormatterSetting.GetDefaultSetting();
+            }
+            return tfs;
+        }
         private void BtnStart_Click(object sender, EventArgs e)
         {
             var inputStr = RTBInput.Text;
             if (!string.IsNullOrWhiteSpace(inputStr))
             {
-               DataTable dt = StructureConverter.ConvertStrToDataTable(inputStr, TableFormatterSetting.GetDefaultSetting());
-               OutputDataGridView.DataSource = dt;   
+                DataTable dt = StructureConverter.ConvertStrToDataTable(inputStr, GetSetting());
+               OutputDataGridView.DataSource = dt;
+               RTBOutput.Text = StructureConverter.ConvertDTToStr(dt, GetSetting());
             }
         }
 
@@ -44,6 +53,15 @@ namespace StringGenerator
         private void RTBInput_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnFormatSetting_Click(object sender, EventArgs e)
+        {
+            TableFormatSettingDlg dlg = new TableFormatSettingDlg();
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+                tfs = dlg.tfs;
+            }
         }
     }
 }

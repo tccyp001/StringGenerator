@@ -47,18 +47,28 @@
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.label12 = new System.Windows.Forms.Label();
+            this.txtEmptyCellMark = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.txtOldColDelimiter = new System.Windows.Forms.TextBox();
             this.txtOldRowDelimiter = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.panel4 = new System.Windows.Forms.Panel();
-            this.txtCustomTemplate = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
+            this.txtCustomTemplate = new System.Windows.Forms.TextBox();
+            this.dataGVColSetting = new System.Windows.Forms.DataGridView();
+            this.label13 = new System.Windows.Forms.Label();
+            this.txtColIndex = new System.Windows.Forms.TextBox();
+            this.txtColFormat = new System.Windows.Forms.TextBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.btnAdd = new System.Windows.Forms.Button();
+            this.btnDel = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGVColSetting)).BeginInit();
             this.SuspendLayout();
             // 
             // txtNewRowDelimiter
@@ -203,7 +213,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(230, 356);
+            this.button1.Location = new System.Drawing.Point(529, 361);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 13;
@@ -213,7 +223,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(341, 356);
+            this.button2.Location = new System.Drawing.Point(666, 361);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 14;
@@ -222,6 +232,8 @@
             // 
             // panel3
             // 
+            this.panel3.Controls.Add(this.label12);
+            this.panel3.Controls.Add(this.txtEmptyCellMark);
             this.panel3.Controls.Add(this.label10);
             this.panel3.Controls.Add(this.label9);
             this.panel3.Controls.Add(this.txtOldColDelimiter);
@@ -230,6 +242,22 @@
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(384, 66);
             this.panel3.TabIndex = 15;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(266, 15);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(83, 13);
+            this.label12.TabIndex = 5;
+            this.label12.Text = "Empty Cell Mark";
+            // 
+            // txtEmptyCellMark
+            // 
+            this.txtEmptyCellMark.Location = new System.Drawing.Point(263, 34);
+            this.txtEmptyCellMark.Name = "txtEmptyCellMark";
+            this.txtEmptyCellMark.Size = new System.Drawing.Size(100, 20);
+            this.txtEmptyCellMark.TabIndex = 4;
             // 
             // label10
             // 
@@ -281,6 +309,15 @@
             this.panel4.Size = new System.Drawing.Size(384, 51);
             this.panel4.TabIndex = 17;
             // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(13, 4);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(149, 13);
+            this.label11.TabIndex = 1;
+            this.label11.Text = "Custom Row Format Template";
+            // 
             // txtCustomTemplate
             // 
             this.txtCustomTemplate.Location = new System.Drawing.Point(13, 23);
@@ -288,20 +325,78 @@
             this.txtCustomTemplate.Size = new System.Drawing.Size(353, 20);
             this.txtCustomTemplate.TabIndex = 0;
             // 
-            // label11
+            // dataGVColSetting
             // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(13, 4);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(124, 13);
-            this.label11.TabIndex = 1;
-            this.label11.Text = "Custom Format Template";
+            this.dataGVColSetting.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGVColSetting.Location = new System.Drawing.Point(478, 179);
+            this.dataGVColSetting.Name = "dataGVColSetting";
+            this.dataGVColSetting.Size = new System.Drawing.Size(240, 150);
+            this.dataGVColSetting.TabIndex = 18;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(475, 48);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(71, 13);
+            this.label13.TabIndex = 19;
+            this.label13.Text = "Column Index";
+            // 
+            // txtColIndex
+            // 
+            this.txtColIndex.Location = new System.Drawing.Point(478, 66);
+            this.txtColIndex.Name = "txtColIndex";
+            this.txtColIndex.Size = new System.Drawing.Size(100, 20);
+            this.txtColIndex.TabIndex = 20;
+            // 
+            // txtColFormat
+            // 
+            this.txtColFormat.Location = new System.Drawing.Point(478, 116);
+            this.txtColFormat.Name = "txtColFormat";
+            this.txtColFormat.Size = new System.Drawing.Size(220, 20);
+            this.txtColFormat.TabIndex = 21;
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(475, 100);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(126, 13);
+            this.label14.TabIndex = 22;
+            this.label14.Text = "Column Format Operation";
+            // 
+            // btnAdd
+            // 
+            this.btnAdd.Location = new System.Drawing.Point(478, 145);
+            this.btnAdd.Name = "btnAdd";
+            this.btnAdd.Size = new System.Drawing.Size(75, 23);
+            this.btnAdd.TabIndex = 23;
+            this.btnAdd.Text = "Add";
+            this.btnAdd.UseVisualStyleBackColor = true;
+            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
+            // 
+            // btnDel
+            // 
+            this.btnDel.Location = new System.Drawing.Point(589, 145);
+            this.btnDel.Name = "btnDel";
+            this.btnDel.Size = new System.Drawing.Size(75, 23);
+            this.btnDel.TabIndex = 24;
+            this.btnDel.Text = "Delete";
+            this.btnDel.UseVisualStyleBackColor = true;
+            this.btnDel.Click += new System.EventHandler(this.btnDel_Click);
             // 
             // TableFormatSettingDlg
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(458, 401);
+            this.ClientSize = new System.Drawing.Size(785, 396);
+            this.Controls.Add(this.btnDel);
+            this.Controls.Add(this.btnAdd);
+            this.Controls.Add(this.label14);
+            this.Controls.Add(this.txtColFormat);
+            this.Controls.Add(this.txtColIndex);
+            this.Controls.Add(this.label13);
+            this.Controls.Add(this.dataGVColSetting);
             this.Controls.Add(this.panel4);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.panel3);
@@ -321,6 +416,7 @@
             this.panel3.PerformLayout();
             this.panel4.ResumeLayout(false);
             this.panel4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGVColSetting)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -355,5 +451,14 @@
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.TextBox txtCustomTemplate;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.TextBox txtEmptyCellMark;
+        private System.Windows.Forms.DataGridView dataGVColSetting;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.TextBox txtColIndex;
+        private System.Windows.Forms.TextBox txtColFormat;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Button btnAdd;
+        private System.Windows.Forms.Button btnDel;
     }
 }
