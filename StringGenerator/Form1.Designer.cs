@@ -32,11 +32,11 @@
             this.btnTest = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.RTBOutput = new System.Windows.Forms.RichTextBox();
             this.RTBExpr = new System.Windows.Forms.RichTextBox();
             this.RTBInput = new System.Windows.Forms.RichTextBox();
             this.OutputDataGridView = new System.Windows.Forms.DataGridView();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.OutputDataGridView)).BeginInit();
@@ -87,16 +87,6 @@
             this.tabPage1.UseVisualStyleBackColor = true;
             this.tabPage1.Click += new System.EventHandler(this.tabPage1_Click);
             // 
-            // tabPage2
-            // 
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(987, 463);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "tabPage2";
-            this.tabPage2.UseVisualStyleBackColor = true;
-            // 
             // RTBOutput
             // 
             this.RTBOutput.Location = new System.Drawing.Point(18, 294);
@@ -129,6 +119,16 @@
             this.OutputDataGridView.Name = "OutputDataGridView";
             this.OutputDataGridView.Size = new System.Drawing.Size(438, 150);
             this.OutputDataGridView.TabIndex = 6;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(1161, 569);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "tabPage2";
+            this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
