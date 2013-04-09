@@ -87,7 +87,6 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "tabPage1";
             this.tabPage1.UseVisualStyleBackColor = true;
-            this.tabPage1.Click += new System.EventHandler(this.tabPage1_Click);
             // 
             // RTBOutput
             // 
@@ -112,7 +111,6 @@
             this.RTBInput.Size = new System.Drawing.Size(1070, 106);
             this.RTBInput.TabIndex = 7;
             this.RTBInput.Text = "";
-            this.RTBInput.TextChanged += new System.EventHandler(this.RTBInput_TextChanged);
             // 
             // OutputDataGridView
             // 

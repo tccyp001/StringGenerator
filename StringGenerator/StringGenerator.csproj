@@ -100,6 +100,10 @@
       <Project>{3C556F3C-47FE-4C23-8B43-12338F882F4A}</Project>
       <Name>StringFormatter</Name>
     </ProjectReference>
+    <ProjectReference Include="..\YpCommonLibrary\YpCommonLibrary.csproj">
+      <Project>{C826BD71-4403-4527-9F7F-3369D34BBDEF}</Project>
+      <Name>YpCommonLibrary</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

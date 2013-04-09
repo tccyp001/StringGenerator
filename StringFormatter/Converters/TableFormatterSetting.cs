@@ -13,17 +13,17 @@ namespace StringFormatter.Converters
         {
             get 
             {
-                if (oldCellDelimiter == "\n")
+                if (oldCellDelimiter.Contains("\n"))
                 {
-                    return "CR";
+                    return oldCellDelimiter.Replace("\n", "CR");
                 }
                return oldCellDelimiter; 
             }
             set 
             {
-               if (value.ToLower() == "cr")
+                if (value.ToLower().Contains("cr"))
                {
-                   oldCellDelimiter = "\n";
+                   oldCellDelimiter = value.Replace("CR", "\n");
                }
                else
                {
@@ -36,17 +36,17 @@ namespace StringFormatter.Converters
         {
             get
             {
-                if (newCellDelimiter == "\n")
+                if (newCellDelimiter.Contains("\n"))
                 {
-                    return "CR";
+                    return newCellDelimiter.Replace("\n", "CR");
                 }
                 return newCellDelimiter;
             }
             set
             {
-                if (value.ToLower() == "cr")
+                if (value.ToLower().Contains("cr"))
                 {
-                    newCellDelimiter = "\n";
+                    newCellDelimiter = value.Replace("CR", "\n");
                 }
                 else
                 {
@@ -59,17 +59,17 @@ namespace StringFormatter.Converters
         {
             get
             {
-                if (oldRowDelimiter == "\n")
+                if (oldRowDelimiter.Contains("\n"))
                 {
-                    return "CR";
+                    return oldRowDelimiter.Replace("\n", "CR");
                 }
                 return oldRowDelimiter;
             }
             set
             {
-                if (value.ToLower() == "cr")
+                if (value.ToLower().Contains("cr"))
                 {
-                    oldRowDelimiter = "\n";
+                    oldRowDelimiter = value.Replace("CR", "\n");
                 }
                 else
                 {
@@ -81,17 +81,17 @@ namespace StringFormatter.Converters
         {
             get
             {
-                if (newRowDelimiter == "\n")
+                if (newRowDelimiter.Contains("\n"))
                 {
-                    return "CR";
+                    return newRowDelimiter.Replace("\n","CR");
                 }
                 return newRowDelimiter;
             }
             set
             {
-                if (value.ToLower() == "cr")
+                if (value.ToLower().Contains("cr"))
                 {
-                    newRowDelimiter = "\n";
+                    newRowDelimiter = value.Replace("CR","\n");
                 }
                 else
                 {
@@ -108,8 +108,7 @@ namespace StringFormatter.Converters
         public string customRowFormat;
         public string emptyCellMark;
         public int totalColNum;
-        public Dictionary<int, string> ColFormatOperationDic = new Dictionary<int, string>();
-
+        public List<MySeriazableListItem> ColFormatOperationDic = new List<MySeriazableListItem>();
 
         public static TableFormatterSetting GetDefaultSetting()
         {

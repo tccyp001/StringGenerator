@@ -2,6 +2,9 @@
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StringGenerator", "StringGenerator\StringGenerator.csproj", "{7EAFC157-7CFB-4D67-8466-20998CF88B24}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1DFE9498-68EC-4313-8B50-D080555724E9} = {1DFE9498-68EC-4313-8B50-D080555724E9}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StringFormatter", "StringFormatter\StringFormatter.csproj", "{3C556F3C-47FE-4C23-8B43-12338F882F4A}"
 EndProject

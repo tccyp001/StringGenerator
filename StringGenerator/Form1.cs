@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using StringFormatter;
 using StringFormatter.Converters;
+using YpCommonLibrary.Utils;
 
 namespace StringGenerator
 {
@@ -45,22 +41,20 @@ namespace StringGenerator
             RTBOutput.Text = ret.ToString();
         }
 
-        private void tabPage1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void RTBInput_TextChanged(object sender, EventArgs e)
-        {
-
-        }
 
         private void btnFormatSetting_Click(object sender, EventArgs e)
         {
-            TableFormatSettingDlg dlg = new TableFormatSettingDlg();
+            tfs = XmlSerializerHelper<TableFormatterSetting>.DeserializeObjectFromXml("tfs.xml");
+            if (tfs == null)
+            {
+                tfs = new TableFormatterSetting();
+            }
+            TableFormatSettingDlg dlg = new TableFormatSettingDlg(tfs);
+
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 tfs = dlg.tfs;
+                XmlSerializerHelper<TableFormatterSetting>.SerializeObjectToXml("tfs.xml", tfs);
             }
         }
     }

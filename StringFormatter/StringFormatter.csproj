@@ -40,6 +40,7 @@
   <ItemGroup>
     <Compile Include="Converters\StructureConverter.cs" />
     <Compile Include="Converters\TableFormatterSetting.cs" />
+    <Compile Include="MySeriazableListItem.cs" />
     <Compile Include="StringFormatOnFly.cs" />
     <Compile Include="Utils\StringExtension.cs" />
     <Compile Include="YpStringFormatter.cs" />

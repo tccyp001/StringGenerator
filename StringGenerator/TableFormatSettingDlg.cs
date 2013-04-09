@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Windows.Forms;
+using StringFormatter;
 using StringFormatter.Converters;
 
 namespace StringGenerator
@@ -9,8 +10,10 @@ namespace StringGenerator
     public partial class TableFormatSettingDlg : Form
     {
         public TableFormatterSetting tfs = new TableFormatterSetting();
-        public TableFormatSettingDlg()
+        private DataTable dt = new DataTable();
+        public TableFormatSettingDlg(TableFormatterSetting tfs)
         {
+            this.tfs = tfs;
             InitializeComponent();
             UpdateSettingsView();
         }
@@ -33,19 +36,19 @@ namespace StringGenerator
             tfs.cellRightWrapper = txtNewColRightWrapper.Text;
             tfs.customRowFormat = txtCustomTemplate.Text;
             tfs.emptyCellMark =  txtEmptyCellMark.Text;
-            SetColSettings();
+            
 
         }
         private void SetColSettings()
         {
-            DataTable dt = new DataTable();
+            dt = new DataTable();
             dt.Columns.Add(new DataColumn("Column Index"));
             dt.Columns.Add(new DataColumn("Column Operation"));
-            foreach (var key in tfs.ColFormatOperationDic.Keys)
+            foreach (var item in tfs.ColFormatOperationDic)
             {
                 var dr = dt.NewRow();
-                dr[0] = key;
-                dr[1] = tfs.ColFormatOperationDic[key];
+                dr[0] = item.Key;
+                dr[1] = item.Value;
                 dt.Rows.Add(dr);
             }
             dataGVColSetting.DataSource = dt;
@@ -62,18 +65,28 @@ namespace StringGenerator
             txtNewColRightWrapper.Text = tfs.cellRightWrapper;
             txtCustomTemplate.Text = tfs.customRowFormat;
             txtEmptyCellMark.Text = tfs.emptyCellMark;
+            SetColSettings();
         }
 
         private void btnDel_Click(object sender, EventArgs e)
         {
-            //dataGVColSetting.SelectedRows.
+
+            var rowIndex = dataGVColSetting.SelectedCells[0].RowIndex;
+            var cellStr = dataGVColSetting[0, rowIndex].Value;
+            var item = tfs.ColFormatOperationDic.Find(m => string.Equals(m.Key.ToString(),cellStr));
+            tfs.ColFormatOperationDic.Remove(item);
+            SetColSettings();
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
             int index = int.Parse(txtColIndex.Text);
             string op = txtColFormat.Text;
-            tfs.ColFormatOperationDic.Add(index, op);
+            tfs.ColFormatOperationDic.Add(new MySeriazableListItem()
+                                              {
+                                                  Key = index,
+                                                  Value = op
+                                              });
             SetColSettings();
         }
     }

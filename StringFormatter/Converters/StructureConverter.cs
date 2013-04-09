@@ -91,6 +91,22 @@ namespace StringFormatter.Converters
                     }
                 }
             }
+            if (strCells.Count()> totalColCount)
+            {
+                List<string> mylist = new List<string>();
+                foreach (var str in strCells)
+                {
+                    if (!string.IsNullOrWhiteSpace(str))
+                    {
+                        mylist.Add(str);
+                    }
+                }
+                for (int i = 0; i < Math.Max(mylist.Count, totalColCount); i++)
+                {
+                    retStrs[i] = mylist[i];
+                }
+            }
+          
             return retStrs;
         }
 
@@ -98,7 +114,16 @@ namespace StringFormatter.Converters
         {
             if (tfs.totalColNum <=0)
             {
-               tfs.totalColNum =  str.Split(tfs.oldCellDelimiter.ToCharArray()).Count();
+               var strs = str.Split(tfs.oldCellDelimiter.ToCharArray());
+               List<string> strList = new List<string>();
+               foreach (var item in strs)
+               {
+                   if (!string.IsNullOrWhiteSpace(item))
+                   {
+                       strList.Add(item);
+                   }
+               }
+               tfs.totalColNum =  strList.Count();
             }
             return tfs.totalColNum;
         }
@@ -139,9 +164,10 @@ namespace StringFormatter.Converters
             {
                 var colKey = "{col" + i + "}";
                 var keyIndex = templateStr.IndexOf(colKey, StringComparison.InvariantCultureIgnoreCase);
-                var realKey = templateStr.Substring(keyIndex, colKey.Length);
+                
                 if (keyIndex > -1)
 	            {
+                    var realKey = templateStr.Substring(keyIndex, colKey.Length);
                     templateStr = templateStr.Replace(realKey, GetRegularCellStr(row.ItemArray[i].ToString(), i, tfs));
 	            }
             }
@@ -173,11 +199,24 @@ namespace StringFormatter.Converters
 
         public static string GetRegularCellStr(string input, int colIndex, TableFormatterSetting tfs)
         {
-            if (tfs.ColFormatOperationDic.ContainsKey(colIndex))
+            var opStr = GetOpStr(colIndex, tfs.ColFormatOperationDic);
+            if (!string.IsNullOrWhiteSpace(opStr))
             {
-                return ApplyCellCustomOp(input, tfs.ColFormatOperationDic[colIndex]);
+                return ApplyCellCustomOp(input, opStr);
             }
             return input;
+        }
+
+        public static string GetOpStr(int colIndex, List<MySeriazableListItem> formatOperationList)
+        {
+            foreach (var item in formatOperationList)
+            {
+                if (colIndex == item.Key)
+                {
+                    return item.Value;
+                }
+            }
+            return string.Empty;
         }
         /// <summary>
         /// operation should be as following format 
@@ -195,8 +234,8 @@ namespace StringFormatter.Converters
             bool reverseFlag = false;
             string retStr = input;
             int index1, index2;
-            if (operation.IndexOf("rev", StringComparison.InvariantCultureIgnoreCase)>0 || 
-                   operation.IndexOf("reverse", StringComparison.InvariantCultureIgnoreCase)>0)
+            if (operation.IndexOf("rev", StringComparison.InvariantCultureIgnoreCase)>=0 || 
+                   operation.IndexOf("reverse", StringComparison.InvariantCultureIgnoreCase)>=0)
             {
                 reverseFlag = true;
             }
@@ -212,7 +251,7 @@ namespace StringFormatter.Converters
                 value2 = RemoveQuote(value2);
                 if (reverseFlag)
                 {
-                    index = input.Length - index -1;
+                    index = input.Length - index;
                 }
                 if (index >= 0 && index < input.Length)
                 {
@@ -221,7 +260,7 @@ namespace StringFormatter.Converters
             }
             index1 = operation.IndexOf("del", StringComparison.InvariantCultureIgnoreCase);
             index2 = operation.IndexOf("delete", StringComparison.InvariantCultureIgnoreCase);
-            if (index1 >0 || index2>0)
+            if (index1 >=0 || index2>=0)
             {
                 string value1;
                 string value2;
@@ -231,7 +270,7 @@ namespace StringFormatter.Converters
                 int len = int.Parse(value2);
                 if (reverseFlag)
                 {
-                    index = input.Length - index -1;
+                    index = input.Length - index ;
                 }
                 if (index >= 0 && index + len < input.Length)
                 {
@@ -240,7 +279,7 @@ namespace StringFormatter.Converters
             }
             index1 = operation.IndexOf("upd", StringComparison.InvariantCultureIgnoreCase);
             index2 = operation.IndexOf("update", StringComparison.InvariantCultureIgnoreCase);
-            if (index1 >0)
+            if (index1 >=0)
             {
                 string value1;
                 string value2;
@@ -251,7 +290,7 @@ namespace StringFormatter.Converters
                 
                 if (reverseFlag)
                 {
-                    index = input.Length - index -1;
+                    index = input.Length - index ;
                 }
                 if (index >= 0 && index + value2.Length < input.Length)
                 {
@@ -260,7 +299,7 @@ namespace StringFormatter.Converters
                 }
             }
             index1 = operation.IndexOf("get", StringComparison.InvariantCultureIgnoreCase);
-            if (index1 >0 || index2>0)
+            if (index1 >=0 || index2>=0)
             {
                 string value1;
                 string value2;
@@ -270,7 +309,7 @@ namespace StringFormatter.Converters
                 int len = int.Parse(value2);
                 if (reverseFlag)
                 {
-                    index = input.Length - index -1;
+                    index = input.Length - index;
                 }
                 if (index >= 0 && index + len < input.Length)
                 {

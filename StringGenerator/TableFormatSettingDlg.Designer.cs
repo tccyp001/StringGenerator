@@ -56,7 +56,6 @@
             this.label8 = new System.Windows.Forms.Label();
             this.panel4 = new System.Windows.Forms.Panel();
             this.label11 = new System.Windows.Forms.Label();
-            this.txtCustomTemplate = new System.Windows.Forms.TextBox();
             this.dataGVColSetting = new System.Windows.Forms.DataGridView();
             this.label13 = new System.Windows.Forms.Label();
             this.txtColIndex = new System.Windows.Forms.TextBox();
@@ -64,6 +63,7 @@
             this.label14 = new System.Windows.Forms.Label();
             this.btnAdd = new System.Windows.Forms.Button();
             this.btnDel = new System.Windows.Forms.Button();
+            this.txtCustomTemplate = new System.Windows.Forms.RichTextBox();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -213,7 +213,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(529, 361);
+            this.button1.Location = new System.Drawing.Point(478, 407);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 13;
@@ -223,7 +223,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(666, 361);
+            this.button2.Location = new System.Drawing.Point(643, 407);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 14;
@@ -303,10 +303,9 @@
             // panel4
             // 
             this.panel4.Controls.Add(this.label11);
-            this.panel4.Controls.Add(this.txtCustomTemplate);
             this.panel4.Location = new System.Drawing.Point(32, 286);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(384, 51);
+            this.panel4.Size = new System.Drawing.Size(384, 161);
             this.panel4.TabIndex = 17;
             // 
             // label11
@@ -318,17 +317,10 @@
             this.label11.TabIndex = 1;
             this.label11.Text = "Custom Row Format Template";
             // 
-            // txtCustomTemplate
-            // 
-            this.txtCustomTemplate.Location = new System.Drawing.Point(13, 23);
-            this.txtCustomTemplate.Name = "txtCustomTemplate";
-            this.txtCustomTemplate.Size = new System.Drawing.Size(353, 20);
-            this.txtCustomTemplate.TabIndex = 0;
-            // 
             // dataGVColSetting
             // 
             this.dataGVColSetting.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGVColSetting.Location = new System.Drawing.Point(478, 179);
+            this.dataGVColSetting.Location = new System.Drawing.Point(478, 225);
             this.dataGVColSetting.Name = "dataGVColSetting";
             this.dataGVColSetting.Size = new System.Drawing.Size(240, 150);
             this.dataGVColSetting.TabIndex = 18;
@@ -385,11 +377,20 @@
             this.btnDel.UseVisualStyleBackColor = true;
             this.btnDel.Click += new System.EventHandler(this.btnDel_Click);
             // 
+            // txtCustomTemplate
+            // 
+            this.txtCustomTemplate.Location = new System.Drawing.Point(48, 306);
+            this.txtCustomTemplate.Name = "txtCustomTemplate";
+            this.txtCustomTemplate.Size = new System.Drawing.Size(347, 138);
+            this.txtCustomTemplate.TabIndex = 2;
+            this.txtCustomTemplate.Text = "";
+            // 
             // TableFormatSettingDlg
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(785, 396);
+            this.ClientSize = new System.Drawing.Size(785, 459);
+            this.Controls.Add(this.txtCustomTemplate);
             this.Controls.Add(this.btnDel);
             this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.label14);
@@ -450,7 +451,6 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.TextBox txtCustomTemplate;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.TextBox txtEmptyCellMark;
         private System.Windows.Forms.DataGridView dataGVColSetting;
@@ -460,5 +460,6 @@
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.Button btnDel;
+        private System.Windows.Forms.RichTextBox txtCustomTemplate;
     }
 }
